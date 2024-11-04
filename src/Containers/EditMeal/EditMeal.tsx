@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 import { IForm, IMeal } from '../../types';
 import axiosApi from '../../axiosApi.ts';
 import { toast } from 'react-toastify';
@@ -8,7 +8,6 @@ import MealForm from '../../Components/MealForm/MealForm.tsx';
 const EditMeal = () => {
   const [meal, setMeal] = useState<IMeal>();
   const [editLoading, setEditLoading] = useState<boolean>(false);
-  const navigate = useNavigate();
   const params = useParams<{ mealId: string }>();
 
   const fetchData: () => Promise<void> = useCallback(async (): Promise<void> => {
@@ -31,7 +30,6 @@ const EditMeal = () => {
       if (params.mealId) {
         setEditLoading(true);
         await axiosApi.put(`/meals/${params.mealId}.json`, {...meal});
-        navigate('/');
         toast.success('Edited successfully');
       }
     } catch (e) {
